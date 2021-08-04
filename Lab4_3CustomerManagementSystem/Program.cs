@@ -16,13 +16,34 @@ namespace Lab4_3CustomerManagementSystem
             customers.Add(c1);
             customers.Add(c2);
             customers.Add(c3);
-            DisplayCustomers(customers);
 
-            Console.WriteLine("Testing out search function");
-            Customer found = SearchForCustomer(customers, "CVS");
-            Console.WriteLine(found);
-            Customer notFound = SearchForCustomer(customers, "Meijer");
-            Console.WriteLine(notFound);
+            Console.WriteLine("-------CUSTOMER MANAGEMENT SYSTEM-------");
+            Console.Write("Would you like to search for a company by [C]ompany Name or [P]hone? ");
+            string input = Console.ReadLine();
+            string search = "";
+            Customer customer = null;
+
+            switch (input)
+            {
+                case "C":
+                    Console.Write("Please enter a name of a customer you would like to search for: ");
+                    search = Console.ReadLine();
+                    customer = SearchForCustomerByCompany(customers, search);
+                    if (customer != null)
+                    {
+                        Console.WriteLine(customer);
+                    }
+                    break;
+                case "P":
+                    Console.Write("Please enter a phone number of a customer you would like to search for: ");
+                    search = Console.ReadLine();
+                    customer = SearchForCustomerByPhone(customers, search);
+                    if (customer != null)
+                    {
+                        Console.WriteLine(customer);
+                    }
+                    break;
+            }  
         }
 
         static void DisplayCustomers(List<Customer> customers)
@@ -33,16 +54,29 @@ namespace Lab4_3CustomerManagementSystem
             }
         }
 
-        static Customer SearchForCustomer(List<Customer> customers, string customerName)
+        static Customer SearchForCustomerByCompany(List<Customer> customers, string companyName)
         {
             foreach(Customer customer in customers)
             {
-                if (customer.GetCompany() == customerName)
+                if (customer.GetCompany() == companyName)
                 {
                     return customer;
                 }
             }
-            Console.WriteLine($"There was no customer with the name of {customerName}");
+            Console.WriteLine($"There was no customer with the name of {companyName}");
+            return null;
+        }
+
+        static Customer SearchForCustomerByPhone(List<Customer> customers, string phone)
+        {
+            foreach (Customer customer in customers)
+            {
+                if (customer.GetPhone() == phone)
+                {
+                    return customer;
+                }
+            }
+            Console.WriteLine($"There was no customer with the phone number of {phone}");
             return null;
         }
     }
