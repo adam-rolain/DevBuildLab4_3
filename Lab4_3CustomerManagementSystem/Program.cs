@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Lab4_3CustomerManagementSystem
 {
@@ -8,10 +9,41 @@ namespace Lab4_3CustomerManagementSystem
         {
             // Testing Customer class
             Customer c1 = new Customer("Walgreens", "Joe Rodriguez", "JoeRodriguez@Walgreens.com", "248-092-9034");
-            Console.WriteLine(c1);
             Customer c2 = new Customer("CVS", "Ron Ramirez", "RonRamirez@CVS.com", "248-881-6752");
-            Console.WriteLine(c2);
+            Customer c3 = new Customer("Rite Aid", "Jim Jones", "JimJones@RiteAid.com", "248-761-6904");
 
+            List<Customer> customers = new List<Customer>();
+            customers.Add(c1);
+            customers.Add(c2);
+            customers.Add(c3);
+            DisplayCustomers(customers);
+
+            Console.WriteLine("Testing out search function");
+            Customer found = SearchForCustomer(customers, "CVS");
+            Console.WriteLine(found);
+            Customer notFound = SearchForCustomer(customers, "Meijer");
+            Console.WriteLine(notFound);
+        }
+
+        static void DisplayCustomers(List<Customer> customers)
+        {
+            foreach(Customer customer in customers)
+            {
+                Console.WriteLine(customer);
+            }
+        }
+
+        static Customer SearchForCustomer(List<Customer> customers, string customerName)
+        {
+            foreach(Customer customer in customers)
+            {
+                if (customer.GetCompany() == customerName)
+                {
+                    return customer;
+                }
+            }
+            Console.WriteLine($"There was no customer with the name of {customerName}");
+            return null;
         }
     }
 
